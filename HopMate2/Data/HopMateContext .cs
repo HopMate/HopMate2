@@ -29,6 +29,7 @@ namespace HopMate2.Data
         public DbSet<PassengerTrip> PassengerTrips { get; set; }
         public DbSet<RequestStatus> RequestStatuses { get; set; }
         public DbSet<StatusTrip> StatusTrips { get; set; }
+        public DbSet<TripLocation> TripLocations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -78,6 +79,12 @@ namespace HopMate2.Data
                 .HasOne(r => r.Driver)
                 .WithMany(d => d.Rewards)
                 .HasForeignKey(r => r.IdDriver)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Trip>()
+                .HasOne(t => t.Driver)
+                .WithMany(d => d.Trips) 
+                .HasForeignKey(t => t.IdDriver)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Relacionamento entre Driver e Penalty (1:N)

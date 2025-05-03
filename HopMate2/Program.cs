@@ -15,6 +15,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Adicionar o CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReact",
+        policy => policy.WithOrigins("http://localhost:3000") // React corre por padrão nesta porta
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+});
+
 // Configurar o DbContext com a connection string
 builder.Services.AddDbContext<HopMateContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -60,6 +69,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Usar CORS
+app.UseCors("AllowReact");
 
 // Configurar o pipeline de HTTP
 app.UseHttpsRedirection();

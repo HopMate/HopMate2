@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HopMate2.Migrations
 {
     [DbContext(typeof(HopMateContext))]
-    [Migration("20250418194045_InitialMigration")]
+    [Migration("20250503152137_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -385,9 +385,6 @@ namespace HopMate2.Migrations
                     b.Property<DateTime>("DateDeparture")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DriverIdDriver")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("IdDriver")
                         .HasColumnType("uniqueidentifier");
 
@@ -399,7 +396,7 @@ namespace HopMate2.Migrations
 
                     b.HasKey("IdTrip");
 
-                    b.HasIndex("DriverIdDriver");
+                    b.HasIndex("IdDriver");
 
                     b.HasIndex("IdStatusTrip");
 
@@ -423,18 +420,13 @@ namespace HopMate2.Migrations
                     b.Property<bool>("IsStart")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("LocationIdLocation")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("IdTripLocation");
 
                     b.HasIndex("IdLocation");
 
                     b.HasIndex("IdTrip");
 
-                    b.HasIndex("LocationIdLocation");
-
-                    b.ToTable("TripLocation");
+                    b.ToTable("TripLocations");
                 });
 
             modelBuilder.Entity("HopMate2.Models.Entities.Vehicle", b =>
@@ -779,8 +771,8 @@ namespace HopMate2.Migrations
                 {
                     b.HasOne("HopMate2.Models.Entities.Driver", "Driver")
                         .WithMany("Trips")
-                        .HasForeignKey("DriverIdDriver")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdDriver")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("HopMate2.Models.Entities.StatusTrip", "StatusTrip")
@@ -805,7 +797,7 @@ namespace HopMate2.Migrations
             modelBuilder.Entity("HopMate2.Models.Entities.TripLocation", b =>
                 {
                     b.HasOne("HopMate2.Models.Entities.Location", "Location")
-                        .WithMany()
+                        .WithMany("TripLocations")
                         .HasForeignKey("IdLocation")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -815,10 +807,6 @@ namespace HopMate2.Migrations
                         .HasForeignKey("IdTrip")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("HopMate2.Models.Entities.Location", null)
-                        .WithMany("TripLocations")
-                        .HasForeignKey("LocationIdLocation");
 
                     b.Navigation("Location");
 

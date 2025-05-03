@@ -438,7 +438,6 @@ namespace HopMate2.Migrations
                     DateArrival = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AvailableSeats = table.Column<int>(type: "int", nullable: false),
                     IdDriver = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DriverIdDriver = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdVehicle = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdStatusTrip = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -446,11 +445,11 @@ namespace HopMate2.Migrations
                 {
                     table.PrimaryKey("PK_Trips", x => x.IdTrip);
                     table.ForeignKey(
-                        name: "FK_Trips_Drivers_DriverIdDriver",
-                        column: x => x.DriverIdDriver,
+                        name: "FK_Trips_Drivers_IdDriver",
+                        column: x => x.IdDriver,
                         principalTable: "Drivers",
                         principalColumn: "IdDriver",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Trips_StatusTrips_IdStatusTrip",
                         column: x => x.IdStatusTrip,
@@ -507,31 +506,25 @@ namespace HopMate2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TripLocation",
+                name: "TripLocations",
                 columns: table => new
                 {
                     IdTripLocation = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdTrip = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdLocation = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsStart = table.Column<bool>(type: "bit", nullable: false),
-                    LocationIdLocation = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    IsStart = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TripLocation", x => x.IdTripLocation);
+                    table.PrimaryKey("PK_TripLocations", x => x.IdTripLocation);
                     table.ForeignKey(
-                        name: "FK_TripLocation_Locations_IdLocation",
+                        name: "FK_TripLocations_Locations_IdLocation",
                         column: x => x.IdLocation,
                         principalTable: "Locations",
                         principalColumn: "IdLocation",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TripLocation_Locations_LocationIdLocation",
-                        column: x => x.LocationIdLocation,
-                        principalTable: "Locations",
-                        principalColumn: "IdLocation");
-                    table.ForeignKey(
-                        name: "FK_TripLocation_Trips_IdTrip",
+                        name: "FK_TripLocations_Trips_IdTrip",
                         column: x => x.IdTrip,
                         principalTable: "Trips",
                         principalColumn: "IdTrip",
@@ -628,24 +621,19 @@ namespace HopMate2.Migrations
                 column: "IdDriver");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TripLocation_IdLocation",
-                table: "TripLocation",
+                name: "IX_TripLocations_IdLocation",
+                table: "TripLocations",
                 column: "IdLocation");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TripLocation_IdTrip",
-                table: "TripLocation",
+                name: "IX_TripLocations_IdTrip",
+                table: "TripLocations",
                 column: "IdTrip");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TripLocation_LocationIdLocation",
-                table: "TripLocation",
-                column: "LocationIdLocation");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Trips_DriverIdDriver",
+                name: "IX_Trips_IdDriver",
                 table: "Trips",
-                column: "DriverIdDriver");
+                column: "IdDriver");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trips_IdStatusTrip",
@@ -712,7 +700,7 @@ namespace HopMate2.Migrations
                 name: "Rewards");
 
             migrationBuilder.DropTable(
-                name: "TripLocation");
+                name: "TripLocations");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -35,7 +35,8 @@ namespace HopMate2.Controllers
                 {
                     UserName = user.UserName,
                     Email = user.Email,
-                    Name = user.UserName 
+                    Name = user.UserName,
+                    PhoneNumber = user.PhoneNumber
                 },
                 user.Password
             );

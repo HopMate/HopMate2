@@ -10,7 +10,7 @@ namespace HopMate2.Models.Entities
 
         public ApplicationUser User { get; set; }
 
-        public string DrivingLicense { get; set; }
+        public required string DrivingLicense { get; set; }
 
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
         public ICollection<Reward> Rewards { get; set; } = new List<Reward>();

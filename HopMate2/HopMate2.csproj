@@ -27,4 +27,20 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Dto\MemberVoucher\" />
+    <Folder Include="Models\Dto\Image\" />
+    <Folder Include="Models\Dto\VoucherStatus\" />
+    <Folder Include="Models\Dto\Voucher\" />
+    <Folder Include="Models\Dto\Vehicle\" />
+    <Folder Include="Models\Dto\StatusTrip\" />
+    <Folder Include="Models\Dto\Sponsor\" />
+    <Folder Include="Models\Dto\Reward\" />
+    <Folder Include="Models\Dto\Review\" />
+    <Folder Include="Models\Dto\RequestStatus\" />
+    <Folder Include="Models\Dto\Penalty\" />
+    <Folder Include="Models\Dto\Passenger\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

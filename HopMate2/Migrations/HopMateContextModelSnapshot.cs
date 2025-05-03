@@ -382,9 +382,6 @@ namespace HopMate2.Migrations
                     b.Property<DateTime>("DateDeparture")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DriverIdDriver")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("IdDriver")
                         .HasColumnType("uniqueidentifier");
 
@@ -396,7 +393,7 @@ namespace HopMate2.Migrations
 
                     b.HasKey("IdTrip");
 
-                    b.HasIndex("DriverIdDriver");
+                    b.HasIndex("IdDriver");
 
                     b.HasIndex("IdStatusTrip");
 
@@ -426,7 +423,7 @@ namespace HopMate2.Migrations
 
                     b.HasIndex("IdTrip");
 
-                    b.ToTable("TripLocation");
+                    b.ToTable("TripLocations");
                 });
 
             modelBuilder.Entity("HopMate2.Models.Entities.Vehicle", b =>
@@ -771,8 +768,8 @@ namespace HopMate2.Migrations
                 {
                     b.HasOne("HopMate2.Models.Entities.Driver", "Driver")
                         .WithMany("Trips")
-                        .HasForeignKey("DriverIdDriver")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdDriver")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("HopMate2.Models.Entities.StatusTrip", "StatusTrip")
